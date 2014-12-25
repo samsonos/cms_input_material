@@ -1,12 +1,12 @@
 <?php
-namespace samson\cms\input\fieldmaterial;
+namespace samson\cms\input;
 
 /**
  * Created by Maxim Omelchenko <omelchenko@samsonos.com>
  * on 24.12.2014 at 13:23
  */
 
-class Table extends \samson\cms\web\material\Table
+class FieldMaterialTable extends \samson\cms\web\material\Table
 {
     /** Table rows count */
     const ROWS_COUNT = 15;

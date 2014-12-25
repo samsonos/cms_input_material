@@ -1,5 +1,5 @@
 <?php
-namespace samson\cms\input\fieldmaterial;
+namespace samson\cms\input;
 
 use samson\activerecord\structure;
 
@@ -8,7 +8,7 @@ use samson\activerecord\structure;
  * on 22.12.2014 at 19:23
  */
 
-class Material extends \samson\cms\input\Field
+class Material extends Field
 {
     protected $id = 'field_material';
 
@@ -62,8 +62,8 @@ class Material extends \samson\cms\input\Field
      */
     public function __async_table($structure, $search = null, $page = null)
     {
-        /** @var Table $table Object to store set of materials */
-        $table = new Table($structure, $search, $page);
+        /** @var FieldMaterialTable $table Object to store set of materials */
+        $table = new FieldMaterialTable($structure, $search, $page);
 
         /** @var string $tableHTML Rendered table */
         $tableHTML = $table->render();
