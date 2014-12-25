@@ -1,0 +1,19 @@
+{
+    "name":"samsonos/cms_input_material",
+    "description":"SamsonCMS generic material field module",
+    "author":"Maxim Omelchenko <omelchenko@samsonos.com>",
+    "require":{
+        "samsonos/cms_input":"*",
+        "samsonos/cms_api":"*",
+        "samsonos/php_pager":"*",
+        "samsonos/php_treeview":"*"
+    },
+    "license":"Open Software License (OSL) v 3.0",
+    "homepage":"http://samsonos.com/",
+    "autoload": {
+        "classmap": ["src/"],
+        "psr-0": {
+            "samson\\cms\\input\\fieldmaterial": "src/"
+        }
+    }
+}

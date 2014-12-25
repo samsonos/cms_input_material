@@ -1,0 +1,20 @@
+<div class="structure-element">
+    <a class="open"
+       href="<?php url_base('field_material', 'table', 'db_structure_id') ?>"
+       title="Материалы структуры">
+        <?php v('db_structure_Name') ?>
+    </a>
+    <div class="control-buttons">
+        <a class="parent_id" style="display:none;"><?php v('db_structure_ParentID') ?></a>
+        <a class="structure_id" style="display:none;"><?php v('db_structure_id') ?></a>
+
+        <!-- ADD LINK !-->
+        <a class="product_control control material_move icon2 icon_16x16 icon-move-materials"
+           structure = "<?php v('db_structure_id') ?>"
+           title="Переместить выбранные материалы в эту категорию">
+        </a>
+
+
+    </div>
+</div>
+<div class="clear"></div>

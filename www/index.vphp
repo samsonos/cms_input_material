@@ -1,0 +1,34 @@
+<div class="field_material">
+
+    <!-- Tree block -->
+    <div class="products_tree" style="position: absolute;  width: 22%; bottom: 0; top: 0; left: 10px; overflow-x: hidden; overflow-y: auto;">
+        <?php v('tree'); ?>
+    </div>
+
+    <div class="right_block">
+
+        <div class="top_block">
+
+            <!-- Search block -->
+            <form class="search" method="POST">
+                <input name="search" id="search" controller="field_material/table/" placeholder="<?php t('Укажите поисковый запрос')?>..." value="<?php iv('search')?>">
+                <input type="hidden" class="loader-text" value="<?php t('Выполняется поиск...')?>">
+            </form>
+
+            <!-- Pager block -->
+            <?php if (isv('pager')): ?>
+                <ul class="table-pager">
+                    <li><?php t('Отображать')?>:</li>
+                    <?php v('pager_html')?>
+                </ul>
+            <?php endif?>
+
+        </div>
+
+        <!-- Table block -->
+        <div class="products_table" style="position: absolute; width: 77%; bottom: 0; top: 0; right: 0; overflow-x: hidden; overflow-y: auto;">
+            <?php v('table_html'); ?>
+        </div>
+
+    </div>
+</div>
