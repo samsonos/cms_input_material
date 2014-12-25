@@ -1,5 +1,1 @@
-<?php
-/**
- * Created by Maxim Omelchenko <omelchenko@samsonos.com>
- * on 22.12.2014 at 19:24
- */ 
+<div class="field_material_btn"><?php t('Выбрать материал') ?></div>
