@@ -8,7 +8,7 @@ use samson\activerecord\structure;
  * on 22.12.2014 at 19:23
  */
 
-class Material extends Field
+class Material extends \samson\cms\input\Field
 {
     protected $id = 'field_material';
 
