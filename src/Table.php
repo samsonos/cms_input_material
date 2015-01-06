@@ -60,9 +60,19 @@ class FieldMaterialTable extends \samson\cms\web\material\Table
         $materialIds = array();
 
         // Fill our recently declared array
-        dbQuery('samson\cms\CMSNavMaterial')
-            ->cond('StructureID', $this->nav->id)
-            ->cond('Active', 1)->fields('MaterialID', $materialIds);
+        $matIdQuery = dbQuery('samson\cms\CMSNavMaterial');
+        if (!empty($this->nav)) {
+
+            $childStructures = array($this->nav->id);
+            $stepChildren = array($this->nav->id);
+
+            while (dbQuery('structure_relation')->cond('parent_id', $stepChildren)->fieldsNew('child_id', $stepChildren)) {
+                $childStructures = array_merge($childStructures, $stepChildren);
+            }
+
+            $matIdQuery->cond('StructureID', $childStructures);
+        }
+        $matIdQuery->cond('Active', 1)->fields('MaterialID', $materialIds);
 
         // Add this identifiers as query condition if they exist
         empty($materialIds) ? $this->query->id(0) : $this->query->id($materialIds);
@@ -84,7 +94,7 @@ class FieldMaterialTable extends \samson\cms\web\material\Table
      * @param \samson\activerecord\material $material Material object to fill row info
      * @return string Rendered row
      */
-    public function row(&$material)
+    public function row(&$material, \samson\pager\Pager & $pager = null)
     {
         // Set table row view context
         m()->view($this->row_tmpl);
@@ -99,7 +109,7 @@ class FieldMaterialTable extends \samson\cms\web\material\Table
 
         // Render row template
         return m()
-            ->set('material', $material)
+            ->set($material, 'material')
             ->set('pager', $this->pager)
             ->set('structureId', isset($this->nav) ? $this->nav->id : '0')
             ->output();

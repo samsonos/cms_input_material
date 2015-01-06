@@ -1,5 +1,5 @@
 /**
- * Created by onysko on 05.11.2014.
+ * Created by Maxim Omelchenko on 25.12.2014 at 17:51.
  */
 
 //var searchField = s('input#search');
@@ -7,8 +7,33 @@ var searchInitiated = false;
 // Ajax request handle
 var searchRequest;
 var searchTimeout;
+var fmLoader;
 
-function  AppProductInit(response){
+s('.field_material_btn_select').pageInit(function(btn){
+
+    var buttonSelect = btn;
+    var buttonDelete = s('.__deletefield', btn.parent());
+
+    buttonSelect.ajaxClick(function(response){
+        var box = s(response.html);
+        box.hide();
+        box.appendTo('body');
+        box = tinybox(box, true, true, true);
+        box.show();
+        var getAttributes = btn.a('getattr');
+        fieldMaterialTree(box, getAttributes, buttonSelect, buttonDelete);
+    });
+
+    buttonDelete.ajaxClick(function(){
+        buttonDelete.hide();
+        buttonSelect.show();
+        buttonDelete.html('');
+    });
+});
+
+
+
+function  fieldMaterialInit(response){
     if (response !== undefined) {
         if (response.table_html !== undefined) {
             s('.field-material-table').html(response.table_html);
@@ -19,29 +44,29 @@ function  AppProductInit(response){
         }
     }
     s('.products-table').fixedHeader();
-    AppProductInitPagerButtons(s('.table-pager'));
+    fieldMaterialInitPager(s('.table-pager'));
 }
 
-s('.products_tree').pageInit(function(obj) {
-    AppProductInit();
+function fieldMaterialTree(box, getAttributes, btnS, btnD) {
 
+    var obj = s('.field_material_tree');
+
+    fieldMaterialInit();
     s('ul', obj).addClass('tree-root');
+    fieldMaterialInitTree(obj);
+    fieldMaterialSearch(s('.field_material input#search'));
+    fieldMaterialTable(box, getAttributes, btnS, btnD);
+}
 
-    AppProductInitTree(obj);
-
-    AppProductSearch(s('.field-material-table input#search'));
-
-});
-
-function AppProductInitPagerButtons(pager)
+function fieldMaterialInitPager(pager)
 {
     s('a', pager).each(function (link) {
         link.ajaxClick(function (response) {
-            loader.hide();
-            AppProductInit(response);
+            //fmLoader.hide();
+            fieldMaterialInit(response);
         }, function() {
             // Create generic loader
-            loader.show('Подождите', true);
+            //fmLoader.show('Подождите', true);
             return true;
         });
     });
@@ -51,15 +76,10 @@ function AppProductInitPagerButtons(pager)
  * Asynchronous material search
  * @param searchField Search query
  */
-function AppProductSearch(searchField) {
+function fieldMaterialSearch(searchField) {
     // Safely get object
     var search = searchField;
 
-    var structure = 0;
-    var company = 0;
-    if (s('#structureId').length) {
-        structure = s('#structureId').val();
-    }
     var page = 1;
 
 
@@ -85,18 +105,24 @@ function AppProductSearch(searchField) {
                 if (!searchInitiated) {
                     // Set flag
                     searchInitiated = true;
+                    
+                    var temp = s('.structure-element .current').parent();
+                    if (temp) {
+                        var structureId = s('.structure_id', temp).html();
+                        console.log(structureId);
+                    }
 
                     // Show loader with i18n text and black bg
-                    loader.show(s('.loader-text').val(), true);
+                    //fmLoader.show(s('.loader-text').val(), true);
 
                     // Perform async request to server for rendering table
-                    s.ajax(s('input#search').a('controller') + structure + '/' + company + '/' + keywords + '/' + page, function(response) {
+                    s.ajax(s('input#search').a('controller') + structureId + '/' + keywords + '/' + page, function(response) {
 
                         response = JSON.parse(response);
                         //s('.products_tree').html(response.table_html);
-                        AppProductInit(response);
+                        fieldMaterialInit(response);
 
-                        loader.hide();
+                        //fmLoader.hide();
 
                         // Release flag
                         searchInitiated = false;
@@ -108,12 +134,12 @@ function AppProductSearch(searchField) {
     });
 }
 
-function AppProductInitTree(tree)
+function fieldMaterialInitTree(tree)
 {
     tree.treeview(
         true,
         function(tree) {
-            AppProductInitTree(tree);
+            fieldMaterialInitTree(tree);
         }
     );
 
@@ -122,34 +148,30 @@ function AppProductInitTree(tree)
     }
 
     s('.open', tree).each(function(link) {
-        link.href = link.a('href');
-        link.a('href', link.href);
         link.ajaxClick(function(response) {
             s('.icon-structure').html(link.html());
             s('.open').removeClass('current');
             link.addClass('current');
-            loader.hide();
-            AppProductInit(response);
+            //fmLoader.hide();
+            fieldMaterialInit(response);
         }, function() {
             // Create generic loader
-            loader.show('Подождите', true);
+            //fmLoader.show('Подождите', true);
             return true;
         });
     });
+}
 
-    s('.product_control.material_move', tree).click(function(link) {
-        var selectForm = s(".table_form");
-        var selectAction = 'product/move/' + link.a('structure');
-
-        selectForm.ajaxForm({
-            'url': selectAction,
-            'handler': function(respTxt){
-                respTxt = JSON.parse(respTxt);
-                AppProductInit(respTxt);
-            }
+function fieldMaterialTable(box, getAttributes, buttonSelect, buttonDelete){
+    s('.field_material_confirm', box).each(function(item){
+        var href = item.a('href');
+        href += getAttributes;
+        item.a('href', href);
+        item.ajaxClick(function(response){
+            buttonDelete.html(response.material);
+            buttonSelect.hide();
+            buttonDelete.show();
+            box.close();
         });
-
-        return false;
     });
-
 }

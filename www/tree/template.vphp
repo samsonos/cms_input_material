@@ -1,7 +1,7 @@
 <div class="structure-element">
     <a class="open"
        href="<?php url_base('field_material', 'table', 'db_structure_id') ?>"
-       title="Материалы структуры">
+       title="Показать материалы структуры">
         <?php v('db_structure_Name') ?>
     </a>
     <div class="control-buttons">

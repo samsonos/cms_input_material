@@ -2,6 +2,7 @@
 namespace samson\cms\input;
 
 use samson\activerecord\structure;
+use samson\cms\web\navigation\CMSNav;
 
 /**
  * Created by Maxim Omelchenko <omelchenko@samsonos.com>
@@ -12,31 +13,20 @@ class Material extends Field
 {
     protected $id = 'field_material';
 
+    protected $default_view = 'field';
+
     /**
-     * @param int $structureId Selected structure identifier
-     * @param string $search Search string
-     * @param int $page Page number
      * @return array Asynchronous result array
      */
-    public function __async_form($structureId, $search = null, $page = null)
+    public function __async_form()
     {
-        /** @var \samson\cms\Navigation $structure Object to store selected structure */
-        $structure = null;
-
-        // If structure identifier is set
-        if (isset($structureId)) {
-            // Try to find it in database and save
-            dbQuery('\samson\cms\Navigation')->id($structureId)->first($structure);
-            // Get parent structure
-            $parent = $structure->parent();
-        }
 
         /** @var array $table Result of asynchronous controller
          * Represented as array of rendered table and pager objects */
-        $table = $this->__async_table($structure, $search, $page);
+        $table = $this->__async_table(0);
 
         // If parent structure is not set, store structure by itself instead
-        $parent = isset($parent) ? $parent : $structure;
+        $parent = isset($parent) ? $parent : CMSNav::fullTree();
 
         /** @var \samson\treeview\SamsonTree $tree Tree structure object */
         $tree = new \samson\treeview\SamsonTree('tree/template', 0, 'field_material/getchild');
@@ -47,7 +37,7 @@ class Material extends Field
         // Return asynchronous result
         return array(
             'status' => 1,
-            'html' => $this->view('index')
+            'html' => $this->view('form')
                 ->set($table)
                 ->set('tree', $treeHTML)
                 ->output()
@@ -55,13 +45,22 @@ class Material extends Field
     }
 
     /**
-     * @param \samson\cms\Navigation $structure Structure object to form table
+     * @param int $structureId Structure identifier to form table
      * @param string $search Search string
      * @param int $page Page number
      * @return array Asynchronous result array
      */
-    public function __async_table($structure, $search = null, $page = null)
+    public function __async_table($structureId, $search = null, $page = null)
     {
+        /** @var array $response Asynchronous controller result */
+        $response = array('status' => false);
+
+        /** @var \samson\cms\Navigation $structure Object to store selected structure */
+        $structure = null;
+
+        // Try to find it in database
+        dbQuery('\samson\cms\Navigation')->id($structureId)->first($structure);
+
         /** @var FieldMaterialTable $table Object to store set of materials */
         $table = new FieldMaterialTable($structure, $search, $page);
 
@@ -72,11 +71,12 @@ class Material extends Field
         $pagerHTML = $table->pager->toHTML();
 
         // Return table
-        return array(
-            'status' => 1,
-            'table_html' => $tableHTML,
-            'pager_html' => $pagerHTML,
-        );
+
+        $response['status'] = true;
+        $response['table_html'] = $tableHTML;
+        $response['pager_html'] = $pagerHTML;
+
+        return $response;
     }
 
     /**
@@ -101,5 +101,46 @@ class Material extends Field
 
         // Asynchronous controller failed
         return array('status' => 0);
+    }
+
+    public function __async_confirm($materialId)
+    {
+        $name = null;
+        if (dbQuery('material')->cond('MaterialID', $materialId)->fieldsNew('Name', $name)) {
+            $name = $name[0];
+            /** @var \samson\activerecord\materialfield $field Materialfield object to store material id */
+            $field = Field::fromMetadata($_GET['e'], $_GET['f'], $_GET['i']);
+            $field->save($materialId);
+            return array('status' => true, 'material' => $name);
+        }
+        return array('status' => false);
+    }
+
+    public function __async_delete()
+    {
+        /** @var \samson\activerecord\materialfield $field Materialfield object to store material id */
+        $field = Field::fromMetadata($_GET['e'], $_GET['f'], $_GET['i']);
+        $field->save('');
+        return array('status'=>true);
+    }
+
+    /** @see \samson\core\iModuleViewable::toView() */
+    public function toView($prefix = null, array $restricted = array())
+    {
+        $materialName = null;
+
+        if (dbQuery('material')->cond('MaterialID', $this->obj->Value)->fieldsNew('Name', $materialName)) {
+            $materialName = $materialName[0];
+        } else {
+            $materialName = t('Данный материал не существует! Выберите новый!', true);
+        }
+        // Generate controller links
+        $this->set('getattr', '?f='.$this->param.'&e='.$this->entity.'&i='.$this->obj->id)
+            ->set('delete_controller', $this->id.'/delete?f='.$this->param.'&e='.$this->entity.'&i='.$this->obj->id)
+            ->set('name', $materialName);
+
+        //$this->set('empty_text', 'Выберите текст');
+        // Call parent rendering routine
+        return parent::toView($prefix, $restricted);
     }
 }

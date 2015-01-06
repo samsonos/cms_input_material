@@ -1,1 +1,6 @@
-<div class="field_material_btn"><?php t('Выбрать материал') ?></div>
+<a class="__deletefield icon2 icon_16x16 icon-delete delete left field_material_btn field_material_btn_delete"
+   href="<?php v('delete_controller')?>"
+    title="Удалить материал" <?php if (!isv('field_value')):?>style="display:none"<?php endif;?>><?php v('name') ?></a>
+<a class="field_material_btn field_material_btn_select" href="<?php url_base('field_material', 'form', '0') ?>"
+    getattr="<?php v('getattr')?>"
+   <?php if (isv('field_value')):?>style="display:none"<?php endif;?>><?php t('Выбрать материал') ?></a>
