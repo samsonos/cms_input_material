@@ -109,7 +109,6 @@ function fieldMaterialSearch(searchField) {
                     var temp = s('.structure-element .current').parent();
                     if (temp) {
                         var structureId = s('.structure_id', temp).html();
-                        console.log(structureId);
                     }
 
                     // Show loader with i18n text and black bg

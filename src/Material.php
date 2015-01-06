@@ -11,7 +11,7 @@ use samson\cms\web\navigation\CMSNav;
 
 class Material extends Field
 {
-    protected $id = 'field_material';
+    protected $id = 'samson_cms_input_material';
 
     protected $default_view = 'field';
 
@@ -20,7 +20,6 @@ class Material extends Field
      */
     public function __async_form()
     {
-
         /** @var array $table Result of asynchronous controller
          * Represented as array of rendered table and pager objects */
         $table = $this->__async_table(0);
@@ -29,7 +28,7 @@ class Material extends Field
         $parent = isset($parent) ? $parent : CMSNav::fullTree();
 
         /** @var \samson\treeview\SamsonTree $tree Tree structure object */
-        $tree = new \samson\treeview\SamsonTree('tree/template', 0, 'field_material/getchild');
+        $tree = new \samson\treeview\SamsonTree('tree/template', 0, $this->id . '/getchild');
 
         /** @var string $treeHTML Rendered tree */
         $treeHTML = $tree->htmlTree($parent);
