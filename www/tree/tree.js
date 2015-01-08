@@ -43,7 +43,7 @@ function  fieldMaterialInit(response){
             s('.table-pager').html(response.pager_html);
         }
     }
-    s('.products-table').fixedHeader();
+    s('.field-material-table').fixedHeader();
     fieldMaterialInitPager(s('.table-pager'));
 }
 
