@@ -6,7 +6,8 @@
         "samsonos/cms_input":"*",
         "samsonos/cms_api":"*",
         "samsonos/php_pager":"*",
-        "samsonos/php_treeview":"*"
+        "samsonos/php_treeview":"*",
+        "samsonos/js_core":"*"
     },
     "license":"Open Software License (OSL) v 3.0",
     "homepage":"http://samsonos.com/",
