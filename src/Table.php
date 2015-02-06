@@ -94,7 +94,7 @@ class FieldMaterialTable extends \samson\cms\web\material\Table
      * @param \samson\activerecord\material $material Material object to fill row info
      * @return string Rendered row
      */
-    public function row(&$material, \samson\pager\Pager & $pager = null)
+    public function row(&$material, \samson\pager\Pager & $pager = null, $module = null)
     {
         // Set table row view context
         m()->view($this->row_tmpl);
