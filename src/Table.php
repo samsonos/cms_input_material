@@ -1,5 +1,5 @@
 <?php
-namespace samson\cms\input;
+namespace samsoncms\input\material;
 
 /**
  * Created by Maxim Omelchenko <omelchenko@samsonos.com>

@@ -1,8 +1,9 @@
 <?php
-namespace samson\cms\input;
+namespace samsoncms\input\material;
 
 use samson\activerecord\structure;
 use samson\cms\web\navigation\CMSNav;
+use samson\cms\input\Field;
 
 /**
  * Created by Maxim Omelchenko <omelchenko@samsonos.com>
