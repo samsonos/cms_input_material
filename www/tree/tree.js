@@ -64,6 +64,14 @@ var SamsonCMS_InputMaterial = function(block) {
 
         var obj = s('.field_material_tree', box);
 
+        // Bind all structures link
+        s('.field_material_all', box).ajaxClick(function(response) {
+            fieldMaterialInit(response);
+        }, function() {
+            //loader on table
+            return true;
+        });
+
         fieldMaterialInit();
         s('ul', obj).addClass('tree-root');
         fieldMaterialInitTree(obj);
