@@ -2,30 +2,46 @@
  * Created by Maxim Omelchenko on 25.12.2014 at 17:51.
  */
 
-var SamsonCMS_InputMaterial = function(btn) {
-    var buttonSelect = btn;
-    var buttonDelete = s('.__deletefield', btn.parent());
+var SamsonCMS_InputMaterial = function(block) {
+    var selectBlock = s('.__add_block', block);
+    var deleteBlock = s('.__delete_block', block);
+    var materialLink = s('.__material_link', block);
+    var getAttributes = s('.__select_btn', selectBlock).a('getattr');
     var searchInitiated = false;
     var searchRequest;
     var searchTimeout;
-    var getAttributes;
     var box;
-    var fmLoader;
+    var fieldLoader = new Loader(block.parent(), {type: 'absolute', top: 1, left: 1});
 
-    buttonSelect.ajaxClick(function (response) {
+    // If material was set hide select block, otherwise hide delete block
+    if (materialLink.html().trim().length) {
+        selectBlock.hide();
+    } else {
+        deleteBlock.hide();
+    }
+    // Show CMSInputMaterial block
+    block.show();
+
+    // Get and show material selection box on select button click
+    s('.__select_btn', selectBlock).ajaxClick(function (response) {
         box = s(response.html);
         box.hide();
         box.appendTo('body');
         box = tinybox(box, true, true, true);
         box.show();
-        getAttributes = btn.a('getattr');
+        // Bind tree in this box
         fieldMaterialTree();
     });
 
-    buttonDelete.ajaxClick(function () {
-        buttonDelete.hide();
-        buttonSelect.show();
-        buttonDelete.html('');
+    //
+    s('.__delete_btn', block).ajaxClick(function () {
+        fieldLoader.hide();
+        selectBlock.show();
+    }, function(){
+        materialLink.html('');
+        deleteBlock.hide();
+        fieldLoader.show();
+        return true;
     });
 
 
@@ -160,14 +176,18 @@ var SamsonCMS_InputMaterial = function(btn) {
             href += getAttributes;
             item.a('href', href);
             item.ajaxClick(function (response) {
-                buttonDelete.html(response.material);
-                buttonSelect.hide();
-                buttonDelete.show();
                 box.close();
+                fieldLoader.hide();
+                deleteBlock.show();
+                materialLink.html(response.material);
+            }, function(){
+                selectBlock.hide();
+                fieldLoader.show();
+                return true;
             });
         });
     }
 };
 
 // Bind input
-SamsonCMS_Input.bind(SamsonCMS_InputMaterial, '.field_material_btn_select');
+SamsonCMS_Input.bind(SamsonCMS_InputMaterial, '.__fieldmaterial');
