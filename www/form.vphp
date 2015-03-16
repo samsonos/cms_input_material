@@ -1,6 +1,6 @@
 <div class="field_material">
     <div class="left_block">
-        <a class="field_material_all" title="<?php t('Все структуры') ?>" href="<?php url_base('samson_cms_input_material', 'table') ?>">Все структуры:</a>
+        <a class="field_material_all" title="<?php t('Все структуры') ?>" href="<?php url_base('samson_cms_input_material', 'table', 0) ?>">Все структуры:</a>
         <!-- Tree block -->
         <div class="field_material_tree">
             <?php v('tree'); ?>
