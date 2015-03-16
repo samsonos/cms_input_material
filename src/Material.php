@@ -127,17 +127,20 @@ class Material extends Field
     /** @see \samson\core\iModuleViewable::toView() */
     public function toView($prefix = null, array $restricted = array())
     {
-        $materialName = null;
+        /** @var array $material Additional field material */
+        $material = null;
 
-        if (dbQuery('material')->cond('MaterialID', $this->obj->Value)->fieldsNew('Name', $materialName)) {
-            $materialName = $materialName[0];
+        // If material exists
+        if (dbQuery('material')->cond('MaterialID', $this->obj->Value)->exec($material)) {
+            $material = array_shift($material);
         } else {
-            $materialName = t('Данный материал не существует! Выберите новый!', true);
+            $material['Name'] = t('Данный материал не существует! Выберите новый!', true);
         }
+
         // Generate controller links
         $this->set('getattr', '?f='.$this->param.'&e='.$this->entity.'&i='.$this->obj->id)
             ->set('delete_controller', $this->id.'/delete?f='.$this->param.'&e='.$this->entity.'&i='.$this->obj->id)
-            ->set('name', $materialName);
+            ->set($material, 'fieldMaterial');
 
         //$this->set('empty_text', 'Выберите текст');
         // Call parent rendering routine

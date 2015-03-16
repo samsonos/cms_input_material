@@ -48,11 +48,25 @@
   }
 }
 
-.field_material_btn_delete{
-//  background-position: 0% 50%;
-  padding-left: 22px;
-}
+.__fieldmaterial {
+//  display: none;
 
-.field_material_btn_select{
-  display: block;
+  .__delete_block {
+    .__delete_btn {
+      //  background-position: 0% 50%;
+      padding-left: 22px;
+      display: inline-block;
+      margin-bottom: -4px;
+    }
+    .__material_link {
+      &:hover, &:focus {
+        text-decoration: underline;
+      }
+    }
+  }
+  .__add_block {
+    .__select_btn {
+      display: block;
+    }
+  }
 }
