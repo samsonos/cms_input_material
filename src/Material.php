@@ -16,6 +16,8 @@ class Material extends Field
 
     protected $default_view = 'field';
 
+    protected $param = 'key_value';
+
     /**
      * @return array Asynchronous result array
      */
@@ -131,7 +133,7 @@ class Material extends Field
         $material = null;
 
         // If material exists
-        if (dbQuery('material')->cond('MaterialID', $this->obj->Value)->exec($material)) {
+        if (dbQuery('material')->cond('MaterialID', $this->value)->exec($material)) {
             $material = array_shift($material);
         } else {
             $material['Name'] = t('Данный материал не существует! Выберите новый!', true);
