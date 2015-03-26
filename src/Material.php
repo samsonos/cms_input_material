@@ -3,7 +3,7 @@ namespace samsoncms\input\material;
 
 use samson\activerecord\structure;
 use samson\cms\web\navigation\CMSNav;
-use samson\cms\input\Field;
+use samsoncms\input\Field;
 
 /**
  * Created by Maxim Omelchenko <omelchenko@samsonos.com>
@@ -12,10 +12,16 @@ use samson\cms\input\Field;
 
 class Material extends Field
 {
+    /** @var  int Field type identifier */
+    protected static $type = 6;
+
+    /** @var string Module identifier */
     protected $id = 'samson_cms_input_material';
 
-    protected $default_view = 'field';
+    /** Path to view file for field rendering */
+    protected $defaultView = 'field';
 
+    /** Database object field name */
     protected $param = 'key_value';
 
     /**
