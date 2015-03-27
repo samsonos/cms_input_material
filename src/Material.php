@@ -117,7 +117,7 @@ class Material extends Field
         if (dbQuery('material')->cond('MaterialID', $materialId)->fieldsNew('Name', $name)) {
             $name = $name[0];
             /** @var \samson\activerecord\materialfield $field Materialfield object to store material id */
-            $field = Field::fromMetadata($_GET['e'], $_GET['f'], $_GET['i']);
+            $field = static::createFromMetadata($_GET['e'], $_GET['f'], $_GET['i']);
             $field->save($materialId);
             return array('status' => true, 'material' => $name);
         }
@@ -127,7 +127,7 @@ class Material extends Field
     public function __async_delete()
     {
         /** @var \samson\activerecord\materialfield $field Materialfield object to store material id */
-        $field = Field::fromMetadata($_GET['e'], $_GET['f'], $_GET['i']);
+        $field = static::createFromMetadata($_GET['e'], $_GET['f'], $_GET['i']);
         $field->save('');
         return array('status'=>true);
     }
