@@ -1,18 +1,18 @@
 <div class="__inputfield __fieldmaterial">
     <div class="__delete_block">
         <a class="icon2 icon_16x16 icon-delete delete left __delete_btn"
-           href="<?php v('delete_controller')?>"
-            title="<?php t('Удалить материал') ?>">
+           href="<?php v('deleteController'); v('getParams') ?>"
+           title="<?php t('Удалить материал') ?>">
         </a>
         <a class="__material_link"
-           href="<?php url_base('material', 'form', 'fieldMaterial_MaterialID')?>"
+           href="<?php url_base('material', 'form', 'material_id')?>"
            title="<?php t('Открыть материал в новой вкладке') ?>" target="_blank">
-            <?php iv('fieldMaterial_Name') ?>
+            <?php iv('material_Name') ?>
         </a>
     </div>
     <div class="__add_block">
         <a class="__select_btn" href="<?php url_base('samson_cms_input_material', 'form', '0') ?>"
-            getattr="<?php v('getattr')?>">
+            getattr="<?php v('getParams') ?>">
             <?php t('Выбрать материал') ?>
         </a>
     </div>
