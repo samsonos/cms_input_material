@@ -190,6 +190,7 @@ var SamsonCMS_InputMaterial = function(block) {
                 fieldLoader.hide();
                 deleteBlock.show();
                 materialLink.html(response.material);
+                materialLink.a('href', response.url);
             }, function(){
                 selectBlock.hide();
                 fieldLoader.show();
