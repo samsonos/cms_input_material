@@ -67,6 +67,7 @@ var SamsonCMS_InputMaterial = function(block) {
         // Bind all structures link
         s('.field_material_all', box).ajaxClick(function(response) {
             fieldMaterialInit(response);
+            s('.structure-element .current').removeClass('current');
         }, function() {
             //loader on table
             return true;
