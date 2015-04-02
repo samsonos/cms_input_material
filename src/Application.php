@@ -6,24 +6,20 @@
 
 namespace samsoncms\input\material;
 
-class MaterialInputApplication extends \samsoncms\input\InputApplication
-{
-    protected $id = 'samson_cms_input_material';
+use samson\cms\web\navigation\CMSNav;
+use samson\treeview\SamsonTree;
 
-    /**
-     * Create field class instance
-     *
-     * @param string|\samson\activerecord\dbRecord $entity Class name or object
-     * @param string|null $param $entity class field
-     * @param int $identifier Identifier to find and create $entity instance
-     * @param \samson\activerecord\dbQuery|null $dbQuery Database object
-     * @return self
-     */
-    public function createField($entity, $param = null, $identifier = null, $dbQuery = null)
-    {
-        $this->field = new Material($entity, $param, $identifier, $dbQuery);
-        return $this;
-    }
+/**
+ * SamsonCMS material input module
+ * @author Max Omelchenko <omelchenko@samsonos.com>
+ */
+class Application extends \samsoncms\input\Application
+{
+    /** @var int Field type number */
+    public static $type = 6;
+
+    /** @var string SamsonCMS field class */
+    protected $fieldClass = '\samsoncms\input\material\Material';
 
     /**
      * @return array Asynchronous result array
@@ -35,10 +31,10 @@ class MaterialInputApplication extends \samsoncms\input\InputApplication
         $table = $this->__async_table(0);
 
         // If parent structure is not set, store structure by itself instead
-        $parent = isset($parent) ? $parent : \samson\cms\web\navigation\CMSNav::fullTree();
+        $parent = isset($parent) ? $parent : CMSNav::fullTree();
 
-        /** @var \samson\treeview\SamsonTree $tree Tree structure object */
-        $tree = new \samson\treeview\SamsonTree('tree/template', 0, $this->id . '/getchild');
+        /** @var SamsonTree $tree Tree structure object */
+        $tree = new SamsonTree('tree/template', 0, $this->id . '/getchild');
 
         /** @var string $treeHTML Rendered tree */
         $treeHTML = $tree->htmlTree($parent);
@@ -79,12 +75,11 @@ class MaterialInputApplication extends \samsoncms\input\InputApplication
         /** @var string $pager_html Rendered pager */
         $pagerHTML = $table->pager->toHTML();
 
-        // Return table
-
         $response['status'] = true;
         $response['table_html'] = $tableHTML;
         $response['pager_html'] = $pagerHTML;
 
+        // Return Table
         return $response;
     }
 
@@ -101,8 +96,8 @@ class MaterialInputApplication extends \samsoncms\input\InputApplication
         // If structure was found by Identifier
         if (dbQuery('\samson\cms\Navigation')->cond('StructureID', $structureId)->first($structure)) {
 
-            /** @var \samson\treeview\SamsonTree $tree Object to store tree structure */
-            $tree = new \samson\treeview\SamsonTree('tree/template', 0, 'product/addchildren');
+            /** @var SamsonTree $tree Object to store tree structure */
+            $tree = new SamsonTree('tree/template', 0, 'product/addchildren');
 
             // Asynchronous controller performed and JSON object is returned
             return array('status' => 1, 'tree' => $tree->htmlTree($structure));
@@ -131,29 +126,5 @@ class MaterialInputApplication extends \samsoncms\input\InputApplication
         $this->createField($_GET['e'], $_GET['f'], $_GET['i']);
         $this->field->save('');
         return array('status'=>true);
-    }
-
-    /** @see \samson\core\iModuleViewable::toView() */
-    public function toView($prefix = null, array $restricted = array())
-    {
-        /** @var \samson\activerecord\material $material Additional field material */
-        $material = null;
-        $params = $this->field->getObjectData();
-
-        $this->view($this->defaultView)
-            ->set('deleteController', url_build($this->id, 'delete'))
-            ->set('getParams', '?f=' . $params['param'] . '&e=' . $params['entity'] . '&i=' . $params['dbObject']->id);
-
-        if ((int)$params['value'] != 0) {
-            // If material exists
-            if (!dbQuery('material')->cond('MaterialID', $params['value'])->first($material)) {
-                $this->set('material_Name', t('Данный материал не существует! Выберите новый!', true));
-            } else {
-                $this->set($material, 'material');
-            }
-        }
-
-        // Return input fields collection prepared for module view
-        return array($prefix.'html' => $this->output());
     }
 }
