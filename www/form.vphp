@@ -1,6 +1,6 @@
 <div class="field_material">
     <div class="left_block">
-        <a class="field_material_all" title="<?php t('Все структуры') ?>" href="<?php url_base('samson_cms_input_material', 'table', 0) ?>">Все структуры:</a>
+        <a class="field_material_all" title="<?php t('Все структуры') ?>" href="<?php url_base('', 'id', 'table', 0) ?>">Все структуры:</a>
         <!-- Tree block -->
         <div class="field_material_tree">
             <?php v('tree'); ?>
@@ -13,7 +13,8 @@
 
             <!-- Search block -->
             <form class="search" method="POST">
-                <input name="search" id="search" controller="samson_cms_input_material/table/" placeholder="<?php t('Укажите поисковый запрос')?>..." value="<?php iv('search')?>">
+                <input name="search" id="search" controller="<?php url_base('', 'id', 'table') ?>"
+                       placeholder="<?php t('Укажите поисковый запрос')?>..." value="<?php iv('search')?>">
                 <input type="hidden" class="loader-text" value="<?php t('Выполняется поиск...')?>">
             </form>
 

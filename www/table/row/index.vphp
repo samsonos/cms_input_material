@@ -5,7 +5,7 @@
         </span>
     </td>
 	<td class="name limited">		
-		<a href="<?php url_base('samson_cms_input_material', 'confirm', 'material_id') ?>"
+		<a href="<?php url_base('', 'id', 'confirm', 'material_id') ?>"
            title="<?php t('Выбрать материал')?>: <?php v('material_Name')?>"
            class="field_material_confirm"><?php v('material_Name')?></a>
 	</td>

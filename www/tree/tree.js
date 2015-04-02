@@ -67,6 +67,7 @@ var SamsonCMS_InputMaterial = function(block) {
         // Bind all structures link
         s('.field_material_all', box).ajaxClick(function(response) {
             fieldMaterialInit(response);
+            s('.structure-element .current').removeClass('current');
         }, function() {
             //loader on table
             return true;
@@ -124,16 +125,17 @@ var SamsonCMS_InputMaterial = function(block) {
                         // Set flag
                         searchInitiated = true;
 
+                        var structureId = 0;
                         var temp = s('.structure-element .current').parent();
                         if (temp) {
-                            var structureId = s('.structure_id', temp).html();
+                            structureId = s('.structure_id', temp).html();
                         }
 
                         // Show loader with i18n text and black bg
                         //fmLoader.show(s('.loader-text').val(), true);
 
                         // Perform async request to server for rendering table
-                        s.ajax(s('input#search').a('controller') + structureId + '/' + keywords + '/' + page, function (response) {
+                        s.ajax(s('input#search').a('controller') + '/' + structureId + '/' + keywords + '/' + page, function (response) {
 
                             response = JSON.parse(response);
                             //s('.products_tree').html(response.table_html);

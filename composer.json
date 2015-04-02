@@ -1,7 +1,16 @@
 {
     "name":"samsonos/cms_input_material",
     "description":"SamsonCMS generic material field module",
-    "author":"Maxim Omelchenko <omelchenko@samsonos.com>",
+    "authors":[
+        {
+            "name":"Vitaly Iegorov",
+            "email":"egorov@samsonos.com"
+        },
+        {
+            "name":"Maxim Omelchenko",
+            "email":"omelchenko@samsonos.com"
+        }
+    ],
     "require":{
         "samsonos/cms_input":"*",
         "samsonos/cms_api":"*",

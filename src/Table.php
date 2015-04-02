@@ -6,6 +6,11 @@ namespace samsoncms\input\material;
  * on 24.12.2014 at 13:23
  */
 
+/**
+ * Class FieldMaterialTable
+ * @author Maxim Omelchenko <omelchenko@samsonos.com>
+ * @package samsoncms\input\material
+ */
 class FieldMaterialTable extends \samson\cms\web\material\Table
 {
     /** Table rows count */

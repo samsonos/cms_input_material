@@ -1,6 +1,6 @@
 <div class="structure-element">
     <a class="open"
-       href="<?php url_base('samson_cms_input_material', 'table', 'db_structure_id') ?>"
+       href="<?php url_base('', 'id', 'table', 'db_structure_id') ?>"
        title="Показать материалы структуры">
         <?php v('db_structure_Name') ?>
     </a>
