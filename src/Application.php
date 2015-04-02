@@ -6,6 +6,7 @@
 
 namespace samsoncms\input\material;
 
+use samson\activerecord\dbQuery;
 use samson\cms\web\navigation\CMSNav;
 use samson\treeview\SamsonTree;
 
@@ -113,9 +114,9 @@ class Application extends \samsoncms\input\Application
         if (dbQuery('material')->cond('MaterialID', $materialId)->fieldsNew('Name', $name)) {
             $name = $name[0];
             /** @var \samson\activerecord\materialfield $field Materialfield object to store material id */
-            $this->createField($_GET['e'], $_GET['f'], $_GET['i']);
+            $this->createField(new dbQuery(), $_GET['e'], $_GET['f'], $_GET['i']);
             $this->field->save($materialId);
-            return array('status' => true, 'material' => $name);
+            return array('status' => true, 'material' => $name, 'url' => url_build($this->id, $materialId));
         }
         return array('status' => false);
     }
@@ -123,7 +124,7 @@ class Application extends \samsoncms\input\Application
     public function __async_delete()
     {
         /** @var \samson\activerecord\materialfield $field Materialfield object to store material id */
-        $this->createField($_GET['e'], $_GET['f'], $_GET['i']);
+        $this->createField(new dbQuery(), $_GET['e'], $_GET['f'], $_GET['i']);
         $this->field->save('');
         return array('status'=>true);
     }
