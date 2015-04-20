@@ -25,11 +25,11 @@ class Application extends \samsoncms\input\Application
     /**
      * @return array Asynchronous result array
      */
-    public function __async_form()
+    public function __async_form($structureId = 0)
     {
         /** @var array $table Result of asynchronous controller
          * Represented as array of rendered table and pager objects */
-        $table = $this->__async_table(0);
+        $table = $this->__async_table($structureId);
 
         // If parent structure is not set, store structure by itself instead
         $parent = isset($parent) ? $parent : CMSNav::fullTree();

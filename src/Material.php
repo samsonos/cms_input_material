@@ -23,6 +23,10 @@ class Material extends Field
         /** @var \samson\activerecord\material $material Additional field material */
         $material = null;
 
+        $structure = (isset($this->dbObject->FieldID) &&
+                    dbQuery('field')->cond('FieldID', $this->dbObject->FieldID)->first($field))
+                    ? intval($field->Value) : 0;
+
         $renderer->view($this->defaultView)
             ->set('deleteController', url_build($renderer->id(), 'delete'))
             ->set('getParams', '?f=' . $this->param . '&e=' . $this->entity . '&i=' . $this->dbObject->id);
@@ -35,6 +39,6 @@ class Material extends Field
                 $renderer->set($material, 'material');
             }
         }
-        return $renderer->output();
+        return $renderer->set('parentID', $structure)->output();
     }
 }

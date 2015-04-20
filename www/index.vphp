@@ -11,7 +11,7 @@
         </a>
     </div>
     <div class="__add_block">
-        <a class="__select_btn" href="<?php url_base('', 'id', 'form') ?>"
+        <a class="__select_btn" href="<?php url_base('', 'id', 'form', 'parentID') ?>"
             getattr="<?php v('getParams') ?>">
             <?php t('Выбрать материал') ?>
         </a>
