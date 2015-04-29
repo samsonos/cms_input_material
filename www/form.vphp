@@ -9,14 +9,14 @@
 
     <div class="right_block">
 
-        <div class="template-block template-block-report">
+        <div class="template-block template-block-simple-table">
             <div class="template-block-header clearfix">
                 <div class="template-block-header-title">
                     <a href="<?php url_base('timesheet')?>" class="icon2 icon-material"></a>
                     <?php t('Select material')?>
                 </div>
                 <div class="template-block-header-controls">
-                    <form method="POST">
+                    <form method="POST" class="input_material_search_form">
                         <input name="search" id="search" controller="<?php url_base('', 'id', 'table', 'structureID') ?>"
                                placeholder="<?php t('Укажите поисковый запрос')?>..." value="<?php iv('search')?>">
                         <input type="hidden" class="loader-text" value="<?php t('Выполняется поиск...')?>">
