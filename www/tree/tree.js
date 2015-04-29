@@ -11,6 +11,7 @@ var SamsonCMS_InputMaterial = function(block) {
     var searchRequest;
     var searchTimeout;
     var box;
+    var tbForm;
     var fieldLoader = new Loader(block.parent(), {type: 'absolute', top: 1, left: 1});
 
     // If material was set hide select block, otherwise hide delete block
@@ -22,15 +23,18 @@ var SamsonCMS_InputMaterial = function(block) {
     // Show CMSInputMaterial block
     block.show();
 
-    // Get and show material selection box on select button click
-    s('.__select_btn', selectBlock).ajaxClick(function (response) {
-        box = s(response.html);
-        box.hide();
-        box.appendTo('body');
-        box = tinybox(box, true, true, true);
-        box.show();
-        // Bind tree in this box
-        fieldMaterialTree();
+    s('.__select_btn', selectBlock).tinyboxAjax({
+        html : 'html',
+        oneClickClose : true,
+        renderedHandler : function(form, tb) {
+            s('.input_material_search_form', form).submit(function(){
+                return false;
+            });
+
+            fieldMaterialTree();
+            box = tb;
+            tbForm = form;
+        }
     });
 
     //
@@ -55,17 +59,16 @@ var SamsonCMS_InputMaterial = function(block) {
                 s('.table-pager').html(response.pager_html);
             }
         }
-        s('.field-material-table').fixedHeader();
+
         fieldMaterialInitPager(s('.table-pager'));
         fieldMaterialTable();
     }
 
     function fieldMaterialTree() {
-
-        var obj = s('.field_material_tree', box);
+        var obj = s('.field_material_tree', tbForm);
 
         // Bind all structures link
-        s('.field_material_all', box).ajaxClick(function(response) {
+        s('.field_material_all', tbForm).ajaxClick(function(response) {
             fieldMaterialInit(response);
             s('.structure-element .current').removeClass('current');
         }, function() {
@@ -80,13 +83,17 @@ var SamsonCMS_InputMaterial = function(block) {
     }
 
     function fieldMaterialInitPager(pager) {
+        var loader;
         s('a', pager).each(function (link) {
             link.ajaxClick(function (response) {
                 //fmLoader.hide();
                 fieldMaterialInit(response);
+                loader.hide();
             }, function () {
                 // Create generic loader
                 //fmLoader.show('Подождите', true);
+                loader = new Loader(s('.field-material-table'));
+                loader.show();
                 return true;
             });
         });
@@ -132,16 +139,14 @@ var SamsonCMS_InputMaterial = function(block) {
                         }
 
                         // Show loader with i18n text and black bg
-                        //fmLoader.show(s('.loader-text').val(), true);
 
+                        var loader = new Loader(s('.field-material-table'));
+                        loader.show();
                         // Perform async request to server for rendering table
-                        s.ajax(s('input#search').a('controller') + '/' + structureId + '/' + keywords + '/' + page, function (response) {
-
+                        s.ajax(s('input#search').a('controller') + '/' + keywords + '/' + page, function (response) {
+                            loader.hide();
                             response = JSON.parse(response);
-                            //s('.products_tree').html(response.table_html);
                             fieldMaterialInit(response);
-
-                            //fmLoader.hide();
 
                             // Release flag
                             searchInitiated = false;
@@ -165,6 +170,8 @@ var SamsonCMS_InputMaterial = function(block) {
             tree = s('.sjs-treeview', tree);
         }
 
+        var loader;
+
         s('.open', tree).each(function (link) {
             link.ajaxClick(function (response) {
                 s('.icon-structure').html(link.html());
@@ -172,7 +179,10 @@ var SamsonCMS_InputMaterial = function(block) {
                 link.addClass('current');
                 //fmLoader.hide();
                 fieldMaterialInit(response);
+                loader.hide();
             }, function () {
+                loader = new Loader(s('.field-material-table'));
+                loader.show();
                 // Create generic loader
                 //fmLoader.show('Подождите', true);
                 return true;
@@ -181,7 +191,7 @@ var SamsonCMS_InputMaterial = function(block) {
     }
 
     function fieldMaterialTable() {
-        s('.field_material_confirm', box).each(function (item) {
+        s('.field_material_confirm', tbForm).each(function (item) {
             var href = item.a('href');
             href += getAttributes;
             item.a('href', href);
