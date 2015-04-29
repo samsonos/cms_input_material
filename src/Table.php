@@ -14,7 +14,7 @@ namespace samsoncms\input\material;
 class FieldMaterialTable extends \samson\cms\web\material\Table
 {
     /** Table rows count */
-    const ROWS_COUNT = 15;
+    const ROWS_COUNT = 10;
 
     /** Parent materials CMSNav */
     protected $nav;
@@ -94,7 +94,7 @@ class FieldMaterialTable extends \samson\cms\web\material\Table
     public function setPagerPrefix()
     {
         // Generate pager url prefix
-        return 'field_material/table/' . (isset($this->nav) ? $this->nav->id : '0') .
+        return 'samsoncms_input_material_application/table/' . (isset($this->nav) ? $this->nav->id : '0') .
         '/' . (isset($this->search{0}) ? $this->search : 'no-search') . '/';
     }
 

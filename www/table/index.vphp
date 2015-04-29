@@ -1,14 +1,10 @@
-<table id="list" class="table field-material-table">
-	<thead>
-		<tr>
-			<th class="id">#</th>
-			<th class="name"><?php t('Материал')?></th>
-			<th class="modyfied"><?php t('Изменен')?></th>
-		</tr>
-	</thead>
-    <form class="table_form" method="post">
-        <tbody>
-            <?php v('rows'); ?>
-        </tbody>
-    </form>
-</table>
+<div class="table field-material-table">
+    <div class="row header">
+        <div class="item">
+            <span><?php t('Материал')?></span>
+        </div><div class="item">
+            <span><?php t('Изменен')?></span>
+        </div>
+    </div>
+    <?php v('rows')?>
+</div>
