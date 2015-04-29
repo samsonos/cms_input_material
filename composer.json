@@ -14,7 +14,7 @@
     "require":{
         "samsonos/cms_input":"*",
         "samsonos/cms_api":"*",
-        "samsonos/cms_app_material":"*",
+        "samsoncms/material":"*",
         "samsonos/php_pager":"*",
         "samsonos/php_treeview":"*",
         "samsonos/js_core":"*"
