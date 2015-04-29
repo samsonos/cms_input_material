@@ -31,14 +31,21 @@ class Application extends \samsoncms\input\Application
          * Represented as array of rendered table and pager objects */
         $table = $this->__async_table($structureId);
 
-        // If parent structure is not set, store structure by itself instead
-        $parent = isset($parent) ? $parent : CMSNav::fullTree();
+        if ($structureId == 0) {
+            // If parent structure is not set, store structure by itself instead
+            $parent = isset($parent) ? $parent : CMSNav::fullTree();
 
-        /** @var SamsonTree $tree Tree structure object */
-        $tree = new SamsonTree('tree/template', 0, $this->id . '/getchild');
+            /** @var SamsonTree $tree Tree structure object */
+            $tree = new SamsonTree('tree/template', 0, $this->id . '/getchild');
 
-        /** @var string $treeHTML Rendered tree */
-        $treeHTML = $tree->htmlTree($parent);
+            /** @var string $treeHTML Rendered tree */
+            $treeHTML = $tree->htmlTree($parent);
+            $treeHide = false;
+        } else {
+            $treeHTML = '';
+            $treeHide = true;
+        }
+
 
         // Return asynchronous result
         return array(
@@ -46,6 +53,8 @@ class Application extends \samsoncms\input\Application
             'html' => $this->view('form')
                 ->set($table)
                 ->set('tree', $treeHTML)
+                ->set('treeHide', $treeHide)
+                ->set('structureID', $structureId)
                 ->output()
         );
     }

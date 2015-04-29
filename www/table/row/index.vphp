@@ -1,15 +1,9 @@
-<tr <?php isnval('material_Draft',0,'class="draft"')?>>
-	<td class="id">
-        <span class="cell-inner">
-            <input type="checkbox" value="<?php v('material_id');?>" name="materialIds[]">
-        </span>
-    </td>
-	<td class="name limited">		
-		<a href="<?php url_base('', 'id', 'confirm', 'material_id') ?>"
+<div class="row">
+    <div class="item">
+        <a href="<?php url_base('', 'id', 'confirm', 'material_id') ?>"
            title="<?php t('Выбрать материал')?>: <?php v('material_Name')?>"
            class="field_material_confirm"><?php v('material_Name')?></a>
-	</td>
-	<td class="modyfied">
-		<?php v('material_Modyfied'); ?>
-	</td>
-</tr>
+    </div><div class="item">
+        <?php v('material_Modyfied'); ?>
+    </div>
+</div>
