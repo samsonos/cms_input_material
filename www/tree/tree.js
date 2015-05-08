@@ -30,10 +30,9 @@ var SamsonCMS_InputMaterial = function(block) {
             s('.input_material_search_form', form).submit(function(){
                 return false;
             });
-
-            fieldMaterialTree();
-            box = tb;
             tbForm = form;
+            box = tb;
+            fieldMaterialTree();
         }
     });
 
