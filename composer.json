@@ -17,6 +17,7 @@
         "samsonos/php_pager":"*",
         "samsonos/php_treeview":"*",
         "samsonos/js_core":"*",
+        "samsoncms/material":"*",
         "samsonos/cms_app_materialtable":"*"
     },
     "license":"Open Software License (OSL) v 3.0",
