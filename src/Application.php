@@ -120,7 +120,7 @@ class Application extends \samsoncms\input\Application
     public function __async_confirm($materialId)
     {
         $name = null;
-        if (dbQuery('material')->cond('MaterialID', $materialId)->fieldsNew('Name', $name)) {
+        if (dbQuery('material')->cond('MaterialID', $materialId)->fields('Name', $name)) {
             $name = $name[0];
             /** @var \samson\activerecord\materialfield $field Materialfield object to store material id */
             $this->createField(new dbQuery(), $_GET['e'], $_GET['f'], $_GET['i']);
