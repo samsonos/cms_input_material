@@ -74,7 +74,7 @@ class FieldMaterialTable extends \samson\cms\web\material\Table
             while (
             dbQuery('structure_relation')
                 ->cond('parent_id', $stepChildren)
-                ->fieldsNew('child_id', $stepChildren)
+                ->fields('child_id', $stepChildren)
             ) {
                 $childStructures = array_merge($childStructures, $stepChildren);
             }
