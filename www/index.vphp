@@ -5,7 +5,7 @@
            title="<?php t('Удалить материал') ?>">
         </a>
         <a class="__material_link"
-           href="<?php url_base('material', 'edit2', 'material_id')?>"
+           href="<?php url_base('material', 'form', 'material_id')?>"
            title="<?php t('Открыть материал в новой вкладке') ?>" target="_blank">
             <?php iv('material_Name') ?>
         </a>

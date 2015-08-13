@@ -95,7 +95,7 @@ class FieldMaterialTable extends \samson\cms\web\material\Table
     {
         // Generate pager url prefix
         return 'samsoncms_input_material_application/table/' . (isset($this->nav) ? $this->nav->id : '0') .
-        '/' . (isset($this->search{0}) ? $this->search : 'no-search') . '/';
+        '/' . (isset($this->search{0}) ? $this->search : '0') . '/';
     }
 
     /**
