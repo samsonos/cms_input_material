@@ -27,9 +27,12 @@ class Material extends Field
                     dbQuery('field')->cond('FieldID', $this->dbObject->FieldID)->first($field))
                     ? intval($field->Value) : 0;
 
+        //TODO Fixed if later
+        $correctID = preg_replace('/[_\d+]+$/', '', $renderer->id());
+
         $renderer->view($this->defaultView)
-            //TODO Fixed if later
-            ->set('deleteController', url_build(preg_replace('/(_\d+)/', '', $renderer->id()), 'delete'))
+
+            ->set('deleteController', url_build($correctID, 'delete'))
             ->set('getParams', '?f=' . $this->param . '&e=' . $this->entity . '&i=' . $this->dbObject->id);
 
         if ((int)$this->value() != 0) {
@@ -40,6 +43,7 @@ class Material extends Field
                 $renderer->set($material, 'material');
             }
         }
+        $renderer->set('id', $correctID);
         return $renderer->set('parentID', $structure)->output();
     }
 }
