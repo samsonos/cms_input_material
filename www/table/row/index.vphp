@@ -1,9 +1,9 @@
-<div class="row">
-    <div class="item">
+<div class="table2-row">
+    <div class="table2-col Material">
         <a href="<?php url_base('', 'id', 'confirm', 'material_id') ?>"
            title="<?php t('Выбрать материал')?>: <?php v('material_Name')?>"
            class="field_material_confirm"><?php v('material_Name')?></a>
-    </div><div class="item">
+    </div><div class="table2-col Modified">
         <?php v('material_Modyfied'); ?>
     </div>
 </div>

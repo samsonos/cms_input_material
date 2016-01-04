@@ -1,10 +1,12 @@
-<div class="table field-material-table">
-    <div class="row header">
-        <div class="item">
+<div class="table2 default field-material-table">
+    <div class="table2-row table2-header-row">
+        <div class="table2-col table2-header-col Material">
             <span><?php t('Материал')?></span>
-        </div><div class="item">
-            <span><?php t('Изменен')?></span>
+        </div><div class="table2-col table2-header-col Modified">
+            <span class="cell-inner"><?php t('Изменен')?></span>
         </div>
     </div>
-    <?php v('rows')?>
+    <div class="table2-body">
+        <?php v('rows')?>
+    </div>
 </div>
