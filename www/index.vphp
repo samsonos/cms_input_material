@@ -1,6 +1,6 @@
 <div class="__inputfield __fieldmaterial">
     <div class="__delete_block">
-        <a class="icon2 icon_16x16 icon-delete delete left __delete_btn"
+        <a class="icon2 icon_16x16 icon-delete left __delete_btn"
            href="<?php v('deleteController'); v('getParams') ?>"
            title="<?php t('Удалить материал') ?>">
         </a>
