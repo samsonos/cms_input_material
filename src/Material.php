@@ -32,18 +32,18 @@ class Material extends Field
 
         $renderer->view($this->defaultView)
 
-            ->set('deleteController', url_build($correctID, 'delete'))
-            ->set('getParams', '?f=' . $this->param . '&e=' . $this->entity . '&i=' . $this->dbObject->id);
+            ->set(url_build($correctID, 'delete'), 'deleteController')
+            ->set('?f=' . $this->param . '&e=' . $this->entity . '&i=' . $this->dbObject->id, 'getParams');
 
         if ((int)$this->value() != 0) {
             // If material exists
             if (!$this->dbQuery->className('material')->cond('MaterialID', $this->value())->first($material)) {
-                $renderer->set('material_Name', t('Данный материал не существует! Выберите новый!', true));
+                $renderer->set(t('Данный материал не существует! Выберите новый!', true), 'material_Name');
             } else {
                 $renderer->set($material, 'material');
             }
         }
-        $renderer->set('id', $correctID);
-        return $renderer->set('parentID', $structure)->output();
+
+        return $renderer->set($correctID, 'id')->set($structure, 'parentID')->output();
     }
 }
