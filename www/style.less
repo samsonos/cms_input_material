@@ -1,21 +1,24 @@
 .field_material{
   text-align: center;
-  width: 80%;
+  min-width: 300px;
   max-height: 80%;
-  overflow-y: scroll;
+  overflow-y: auto;
   background-color: #FFFFFF;
   padding: 10px;
+  padding: 35px;
 
   .left_block{
-    width: 25%;
+    margin-top: 17px;
+    width: 30%;
     display: inline-block;
     position: relative;
     vertical-align: top;
     height: 100%;
+
     .field_material_all{
       display: block;
       text-align: left;
-      font-size: 30px;
+      font-size: 16px;
       margin: 0px 0px 20px 0px;
     }
 
@@ -28,8 +31,18 @@
   }
 
   .right_block {
+
+    .title-table-template{
+      width: 50%;
+      float: left;
+      margin: 15px 0;
+      font-size: 16px;
+      input{
+        font-size: 14px;
+      }
+    }
+
     position: relative;
-    width: 70%;
     display: inline-block;
     height: 100%;
     .top_block{
