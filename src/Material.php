@@ -27,18 +27,23 @@ class Material extends Field
                     dbQuery('field')->cond('FieldID', $this->dbObject->FieldID)->first($field))
                     ? intval($field->Value) : 0;
 
+        //TODO Fixed if later
+        $correctID = preg_replace('/[_\d+]+$/', '', $renderer->id());
+
         $renderer->view($this->defaultView)
-            ->set('deleteController', url_build($renderer->id(), 'delete'))
-            ->set('getParams', '?f=' . $this->param . '&e=' . $this->entity . '&i=' . $this->dbObject->id);
+
+            ->set(url_build($correctID, 'delete'), 'deleteController')
+            ->set('?f=' . $this->param . '&e=' . $this->entity . '&i=' . $this->dbObject->id, 'getParams');
 
         if ((int)$this->value() != 0) {
             // If material exists
             if (!$this->dbQuery->className('material')->cond('MaterialID', $this->value())->first($material)) {
-                $renderer->set('material_Name', t('Данный материал не существует! Выберите новый!', true));
+                $renderer->set(t('Данный материал не существует! Выберите новый!', true), 'material_Name');
             } else {
                 $renderer->set($material, 'material');
             }
         }
-        return $renderer->set('parentID', $structure)->output();
+
+        return $renderer->set($correctID, 'id')->set($structure, 'parentID')->output();
     }
 }

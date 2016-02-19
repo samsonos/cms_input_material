@@ -1,35 +1,38 @@
 <div class="field_material">
-    <div class="left_block" <?php isval('treeHide', true, 'style="display: none;"') ?>>
-        <a class="field_material_all" title="<?php t('Все структуры') ?>" href="<?php url_base('', 'id', 'table', 0) ?>">Все структуры:</a>
-        <!-- Tree block -->
-        <div class="field_material_tree">
-            <?php v('tree'); ?>
-        </div>
-    </div>
-
-    <div class="right_block">
-
-        <div class="template-block template-block-simple-table">
-            <div class="template-block-header clearfix">
-                <div class="template-block-header-title">
-                    <a href="<?php url_base('timesheet')?>" class="icon2 icon-material"></a>
-                    <?php t('Select material')?>
-                </div>
-                <div class="template-block-header-controls">
-                    <form method="POST" class="input_material_search_form">
-                        <input name="search" id="search" controller="<?php url_base('', 'id', 'table', 'structureID') ?>"
-                               placeholder="<?php t('Укажите поисковый запрос')?>..." value="<?php iv('search')?>">
-                        <input type="hidden" class="loader-text" value="<?php t('Выполняется поиск...')?>">
-                    </form>
-                </div>
+    <div class="field_material_main_block" <?php isval('treeHide', false, 'style="width: 570px"') ?>>
+        <div class="left_block" <?php isval('treeHide', true, 'style="display: none;"') ?>>
+            <a class="field_material_all" title="<?php t('Все структуры') ?>" href="<?php url_base('', 'id', 'table', 0) ?>">Все структуры:</a>
+            <!-- Tree block -->
+            <div class="field_material_tree">
+                <?php v('tree'); ?>
             </div>
-            <div class="template-block-content">
-                <ul class="table-pager report-pager">
-                    <?php v('pager_html')?>
-                </ul>
+        </div>
 
-                <div class="field_material_table">
-                    <?php v('table_html'); ?>
+        <div class="right_block">
+
+            <div class="template-block-simple-table">
+                <div class="template-block-header clearfix">
+                    <div class="template-block-header-title title-table-template">
+                        <a href="<?php url_base('timesheet')?>" class="icon2 icon-material"></a>
+                        <?php t('Select material')?>
+                    </div>
+                    <div class="template-block-header-controls title-table-template">
+                        <form method="POST" class="input_material_search_form">
+                            <input name="search" id="search" controller="<?php url_base('', 'id', 'table', 'structureID') ?>"
+                                   placeholder="<?php t('Укажите поисковый запрос')?>..." value="<?php iv('search')?>">
+                            <input type="hidden" class="loader-text" value="<?php t('Выполняется поиск...')?>">
+                        </form>
+                    </div>
+                </div>
+                <div class="template-block-content">
+
+                    <div class="field_material_table">
+                        <?php v('table_html'); ?>
+                    </div>
+
+                    <ul class="table-pager report-pager">
+                        <?php v('pager_html')?>
+                    </ul>
                 </div>
             </div>
         </div>

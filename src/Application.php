@@ -52,9 +52,9 @@ class Application extends \samsoncms\input\Application
             'status' => 1,
             'html' => $this->view('form')
                 ->set($table)
-                ->set('tree', $treeHTML)
-                ->set('treeHide', $treeHide)
-                ->set('structureID', $structureId)
+                ->set($treeHTML, 'tree')
+                ->set($treeHide, 'treeHide')
+                ->set($structureId, 'structureID')
                 ->output()
         );
     }
