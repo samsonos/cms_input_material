@@ -9,6 +9,7 @@ namespace samsoncms\input\material;
 use samson\activerecord\dbQuery;
 use samson\cms\web\navigation\CMSNav;
 use samson\treeview\SamsonTree;
+use samsoncms\api\Navigation;
 
 /**
  * SamsonCMS material input module
@@ -74,7 +75,7 @@ class Application extends \samsoncms\input\Application
         $structure = null;
 
         // Try to find it in database
-        dbQuery('\samson\cms\Navigation')->id($structureId)->first($structure);
+        dbQuery(Navigation::class)->id($structureId)->first($structure);
 
         /** @var FieldMaterialTable $table Object to store set of materials */
         $table = new FieldMaterialTable($structure, $search, $page);
@@ -104,7 +105,7 @@ class Application extends \samsoncms\input\Application
         $structure = null;
 
         // If structure was found by Identifier
-        if (dbQuery('\samson\cms\Navigation')->cond('StructureID', $structureId)->first($structure)) {
+        if (dbQuery(Navigation::class)->cond('StructureID', $structureId)->first($structure)) {
 
             /** @var SamsonTree $tree Object to store tree structure */
             $tree = new SamsonTree('tree/template', 0, 'product/addchildren');
