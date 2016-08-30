@@ -5,13 +5,15 @@ namespace samsoncms\input\material;
  * Created by Maxim Omelchenko <omelchenko@samsonos.com>
  * on 24.12.2014 at 13:23
  */
+use samsoncms\api\Navigation;
+use samsoncms\api\NavigationMaterial;
 
 /**
  * Class FieldMaterialTable
  * @author Maxim Omelchenko <omelchenko@samsonos.com>
  * @package samsoncms\input\material
  */
-class FieldMaterialTable extends \samsoncms\app\material\Table
+class FieldMaterialTable extends \samson\cms\web\material\Table
 {
     /** Table rows count */
     const ROWS_COUNT = 10;
@@ -49,7 +51,7 @@ class FieldMaterialTable extends \samsoncms\app\material\Table
      * @param string $search Keywords to search in materials
      * @param string $page Current table page number
      */
-    public function __construct(\samson\cms\Navigation & $structure = null, $search = null, $page = null)
+    public function __construct(Navigation & $structure = null, $search = null, $page = null)
     {
         // Call parent constructor
         parent::__construct($structure, $search, $page);
@@ -65,7 +67,7 @@ class FieldMaterialTable extends \samsoncms\app\material\Table
         $materialIds = array();
 
         // Fill our recently declared array
-        $matIdQuery = dbQuery('samson\cms\CMSNavMaterial');
+        $matIdQuery = dbQuery(NavigationMaterial::class);
         if (!empty($this->nav)) {
 
             $childStructures = array($this->nav->id);
