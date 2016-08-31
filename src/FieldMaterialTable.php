@@ -13,7 +13,7 @@ use samsoncms\api\NavigationMaterial;
  * @author Maxim Omelchenko <omelchenko@samsonos.com>
  * @package samsoncms\input\material
  */
-class FieldMaterialTable extends \samson\cms\web\material\Table
+class FieldMaterialTable extends \samsoncms\app\material\Table
 {
     /** Table rows count */
     const ROWS_COUNT = 10;
