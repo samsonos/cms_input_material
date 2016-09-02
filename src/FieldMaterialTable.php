@@ -7,13 +7,14 @@ namespace samsoncms\input\material;
  */
 use samsoncms\api\Navigation;
 use samsoncms\api\NavigationMaterial;
+use samsoncms\app\material\Table;
 
 /**
  * Class FieldMaterialTable
  * @author Maxim Omelchenko <omelchenko@samsonos.com>
  * @package samsoncms\input\material
  */
-class FieldMaterialTable extends \samson\cms\web\material\Table
+class FieldMaterialTable extends Table
 {
     /** Table rows count */
     const ROWS_COUNT = 10;
