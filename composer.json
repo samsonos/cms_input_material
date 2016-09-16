@@ -18,7 +18,8 @@
         "samsonos/php_pager":"*",
         "samsonos/php_treeview":"*",
         "samsonos/js_core":"*",
-        "samsonos/cms_app_materialtable":"*"
+        "samsonos/cms_app_materialtable":"*",
+        "samsoncms/material":"*"
     },
     "license":"Open Software License (OSL) v 3.0",
     "homepage":"http://samsonos.com/",
