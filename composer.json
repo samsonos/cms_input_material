@@ -11,14 +11,13 @@
             "email":"omelchenko@samsonos.com"
         }
     ],
-    "minimum-stability": "dev",
     "require":{
         "samsonos/cms_input":"*",
         "samsoncms/api":"*",
         "samsonos/php_pager":"*",
         "samsonos/php_treeview":"*",
         "samsonos/js_core":"*",
-        "samsonos/cms_app_materialtable":"*",
+        "samsoncms/materialtable":"*",
         "samsoncms/material":"*"
     },
     "license":"Open Software License (OSL) v 3.0",
